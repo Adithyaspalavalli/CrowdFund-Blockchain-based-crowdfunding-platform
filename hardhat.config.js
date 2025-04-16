@@ -1,4 +1,4 @@
-require("dotenv").config({ path: __dirname + "/.env.local" }); // When deploying -- be careful about this path..
+require("dotenv").config({ path: __dirname + "/.env" }); // When deploying -- be careful about this path..
 require("@nomiclabs/hardhat-ethers");
 require("hardhat-deploy");
 require("@nomicfoundation/hardhat-toolbox");
