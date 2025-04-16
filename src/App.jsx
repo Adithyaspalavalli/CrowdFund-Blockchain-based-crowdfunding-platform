@@ -37,8 +37,8 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/signIn" element={<SignIn />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/profile"

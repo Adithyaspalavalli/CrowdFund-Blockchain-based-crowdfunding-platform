@@ -143,7 +143,7 @@ export default function SignIn() {
         setResponseMsg("Sign in success.");
         setResponseSeverity("success");
         // console.log("Sign up success " + showResponse);
-        navigate("/"); // auto-navigate to homepage (After successful sign-in)
+        navigate("/create-campaign"); // auto-navigate to campaign page (After successful sign-in)
       } catch (error) {
         setShowResponse(true);
         setResponseSeverity("error");
