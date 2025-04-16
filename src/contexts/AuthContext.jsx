@@ -1,104 +1,90 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../config/firebase-config";
-import firebase from "firebase/compat/app";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword as firebaseSignIn,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from 'firebase/auth';
+import app, { auth } from '../config/firebase-config';
 
-// service imports..
-import { useNavigate } from "react-router-dom";
+const googleAuthProvider = new GoogleAuthProvider();
 
-// to maintain the status of the authentication across the application
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
-// hook access the context outside this..
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-  // hooks..
-  const [currentUserCredentials, setCurrentUserCredentials] = useState();
-  const [isLoading, setIsLoading] = useState(true); // to store the status .. whether processing or stopped.
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserCredentials, setCurrentUserCredentials] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const [authState, setAuthState] = React.useState(
-    false || window.localStorage.getItem("authStatus") === "true"
-  );
-  const [token, setToken] = React.useState("");
-
-  const navigate = useNavigate();
-
-  // hooks..handle whenever refreshed..
-  useEffect(() => {
-    // set the credentials, whenver sign-up/sign-in happens.
-    const unsubscriber = auth.onAuthStateChanged((userCredentials) => {
-      setIsLoading(false); // as soon as done. stop
-      if (userCredentials) {
-        setCurrentUserCredentials(userCredentials);
-        // if yes, keep logged in.
-        setAuthState(true);
-        window.localStorage.setItem("authStatus", "true"); // save in local storage.. can cut-off the delay
-        // get token..
-        userCredentials.getIdToken().then((token) => {
-          setToken(token);
-          navigate("/");  // navigate to home page
-          // console.log(token);
-        });
-      }
-    });
-    return unsubscriber; // for unsubscribe from onAuthStateChanged listener [later when needed]
-  }, []);
-
-  // helpers
-  function signUpWithEmailAndPassword(email, password) {
-    // console.log(`Signup called with ${email} & ${password}`);
-    return auth.createUserWithEmailAndPassword(email, password); // this returns the promise, later based on its value Signup_Success or Failure will be taken care.
+  async function signup(email, password, displayName) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Update profile with display name
+      await updateProfile(userCredential.user, {
+        displayName: displayName
+      });
+      setCurrentUserCredentials(userCredential);
+      return userCredential;
+    } catch (error) {
+      console.error("Signup error:", error);
+      throw error;
+    }
   }
 
-  const signInWithGooglePopup = () => {
-    return auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    // .then((userCredentials) => {
-    //   console.log(userCredentials);
-    // });
-  };
+  function login(email, password) {
+    return firebaseSignIn(auth, email, password)
+      .then((userCredential) => {
+        setCurrentUserCredentials(userCredential);
+        return userCredential;
+      });
+  }
 
-  const signInWithEmailAndPassword = (email, password) => {
-    return auth.signInWithEmailAndPassword(email, password);
-  };
+  function signInWithGoogle() {
+    return signInWithPopup(auth, googleAuthProvider)
+      .then((result) => {
+        setCurrentUserCredentials(result);
+        return result;
+      });
+  }
 
-  const signout = (email, password) => {
-    return auth.signOut();
-  };
+  function signout() {
+    setCurrentUserCredentials(null);
+    return signOut(auth);
+  }
 
-  const resetPassword = (email) => {
-    const promise = auth.sendPasswordResetEmail(email);
-    console.log("Password reset email sent");
-    return promise;
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-  const updateEmail = (email) => {
-    return currentUserCredentials.updateEmail(email);
-  };
+    return unsubscribe;
+  }, []);
 
-  const updatePassword = (password) => {
-    return currentUserCredentials.updatePassword(password);
-  };
-
-  // context value thats going to be used in other pages..
   const value = {
+    currentUser,
     currentUserCredentials,
-    signUpWithEmailAndPassword,
-    signInWithGooglePopup,
-    signInWithEmailAndPassword,
+    signup,
+    login,
+    signInWithGoogle,
     signout,
-    resetPassword,
-    updateEmail,
-    updatePassword,
+    loading
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!isLoading && children}
-      {/* ☝🏽 Don't  render until current user loads..*/}
+      {!loading && children}
     </AuthContext.Provider>
   );
 }
 
+// Add default export
 export default AuthProvider;

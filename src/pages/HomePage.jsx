@@ -1,118 +1,163 @@
 import React, { useEffect } from "react";
 
 // UI imports
-import { Stack } from "@mui/system";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import Button from "@mui/material/Button";
+import { Box, Container, Typography, Grid, Divider, CircularProgress, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import CircularProgress from "@mui/material/CircularProgress";
 
-// [block-chain] smart-contract related imports..
+// [block-chain] smart-contract related imports
 import {
   getDeployedCampaigns,
   getCampaignsSummary,
-} from "../../utils/getCampaigns";
+} from "../utils/getCampaigns";
 
-// local imports..
+// local components
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import CampaignCard from "../components/CampaignCard";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import Categories from "../components/Categories";
+import Stats from "../components/Stats";
 
-// service imports..
+// service imports
 import axios from "axios";
 
 const api_url = "http://localhost:4000/api/";
 
 function HomePage() {
-  // for navigation..
+  // for navigation
   const navigate = useNavigate();
+  const theme = useTheme();
 
-  // hooks..
+  // hooks
   const [campaignsList, setCampaignsList] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    // console.log("useEffect called");
     let ignore = false;
-    // fetch the campaigns..
+    
+    // fetch the campaigns
     const fetchData = async () => {
-      const deployedCampaignsList = await getDeployedCampaigns(); // call the function to fetch the data
-      // console.log(deployedCampaignsList);
-      setCampaignsList(await getCampaignsSummary(deployedCampaignsList));
-      console.log("fetched campaigns");
-      console.log(campaignsList);
+      try {
+        setLoading(true);
+        const deployedCampaignsList = await getDeployedCampaigns();
+        setCampaignsList(await getCampaignsSummary(deployedCampaignsList));
+        console.log("Fetched campaigns");
+      } catch (error) {
+        console.error("Error fetching campaigns:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // fetch the data..
+    // fetch the data
     fetchData();
     return () => {
-      ignore = true; // to avoid rendering multiple times..
+      ignore = true; // to avoid rendering multiple times
     };
   }, []);
 
   return (
-    <Box className="App">
+    <Box>
+      {/* Navigation */}
       <NavBar />
-      {/* <Stack direction="row" spacing={2}></Stack> */}
-      <CssBaseline />
-      <Container
-        component="main"
-        sx={{ mt: 8, mb: 2 }}
-        justifyContent="center"
-        maxWidth="md"
+
+      {/* Hero Section */}
+      <Box sx={{ pt: 8 }}>
+        <Hero />
+      </Box>
+
+      {/* Features Section */}
+      <Features />
+
+      {/* Stats Section */}
+      <Stats />
+
+      {/* Categories Section */}
+      <Categories />
+
+      {/* Active Campaigns Section */}
+      <Box
+        sx={{
+          py: 8,
+          backgroundColor: theme.palette.background.paper,
+        }}
       >
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h2" component="h1" gutterBottom>
-            🧑‍🤝‍🧑 Crowd Fund :💰
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography variant="h2" component="h2" fontWeight="bold" gutterBottom>
+              Active Campaigns
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+              Discover and support campaigns that need your backing
+            </Typography>
+          </Box>
+
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+              <CircularProgress color="primary" />
+            </Box>
+          ) : campaignsList.length > 0 ? (
+            <Grid container spacing={4}>
+              {campaignsList.map((campaign, idx) => (
+                <Grid item key={idx} xs={12} sm={6} md={4}>
+                  <CampaignCard details={campaign} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="h6" color="text.secondary">
+                No active campaigns at the moment. Be the first to create one!
+              </Typography>
+            </Box>
+          )}
+        </Container>
+      </Box>
+
+      {/* Call to Action Section */}
+      <Box
+        sx={{
+          py: 8,
+          backgroundColor: theme.palette.primary.main,
+          color: 'white',
+          textAlign: 'center',
+        }}
+      >
+        <Container maxWidth="md">
+          <Typography variant="h3" component="h2" fontWeight="bold" gutterBottom>
+            Ready to Start Your Campaign?
           </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
-            {"Get Help from Crowd..!!"}
-            {" Raise a campaign to help the needy."}
+          <Typography variant="h6" sx={{ mb: 4, opacity: 0.8 }}>
+            Create your campaign today and start raising funds for your project or cause.
           </Typography>
-          <Typography variant="body1">Welcome 👋 to the community.</Typography>
-          <Typography variant="body1">[ONLY] Core functionalities done 🚧. More features on the way..!! 🏃 </Typography>
-        </Box>
-        <Box sx={{ mt: 4, mb: 2 }}>
-          <Stack>
-            <Stack
-              direction={"row"}
-              justifyContent="space-between"
-              alignItems="center"
-              // width={10}
-            >
-              <Box>
-                <Typography variant="h5">
-                  Take part in active campaigns..
-                </Typography>
-                <Typography variant="caption">
-                  Top {campaignsList.length} recent campaigns..
-                </Typography>
-              </Box>
-              {/* <Button onClick={() => navigate("/active-campaigns")}>
-                View more
-              </Button> */}
-            </Stack>
-            <Container sx={{ py: 2 }} maxWidth="md">
-              {/* End hero unit */}
-              {/* load as long as data is not fetched. */}
-              {campaignsList.length == 0 && (
-                <CircularProgress color="success" />
-              )}
-              <Grid container spacing={4}>
-                {campaignsList.map((activeCampaign, idx) => (
-                  <Grid item key={idx} xs={12} sm={6} md={4}>
-                    <CampaignCard details={activeCampaign} />
-                  </Grid>
-                ))}
-              </Grid>
-            </Container>
-          </Stack>
-        </Box>
-      </Container>
+          <Box 
+            component="button"
+            onClick={() => navigate('/create-campaign')}
+            sx={{
+              py: 2,
+              px: 4,
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              color: theme.palette.primary.main,
+              backgroundColor: 'white',
+              border: 'none',
+              borderRadius: 30,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 14px 0 rgba(0, 0, 0, 0.2)',
+              '&:hover': {
+                transform: 'translateY(-3px)',
+                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.3)',
+              }
+            }}
+          >
+            Create Campaign
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Footer */}
       <Footer />
     </Box>
   );
