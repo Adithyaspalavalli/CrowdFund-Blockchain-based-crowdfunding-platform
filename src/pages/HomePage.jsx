@@ -67,7 +67,7 @@ function HomePage() {
       >
         <Box sx={{ mb: 2 }}>
           <Typography variant="h2" component="h1" gutterBottom>
-            🧑‍🤝‍🧑 Crowd Help :💰
+            🧑‍🤝‍🧑 Crowd Fund :💰
           </Typography>
           <Typography variant="h5" component="h2" gutterBottom>
             {"Get Help from Crowd..!!"}
