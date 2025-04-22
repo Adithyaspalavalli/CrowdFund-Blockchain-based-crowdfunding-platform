@@ -119,6 +119,7 @@ function CampaignCard(props) {
               }}
             >
               {description}
+              
             </Typography>
             <Stack
               direction="row"

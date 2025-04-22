@@ -172,9 +172,17 @@ function HomePage() {
             <Typography variant="body2" sx={{ mt: 3 }}>
               If you're a new user, please create a new MetaMask account:
             </Typography>
-            <Button variant="outlined" href="https://metamask.io/" size="large" sx={{ mt: 1 }}>
-              Create MetaMask Account
-            </Button>
+            <Button
+  variant="outlined"
+  href="https://metamask.io/"
+  size="large"
+  sx={{ mt: 1 }}
+  component="a"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Create MetaMask Account
+</Button>
           </Box>
         </Container>
 

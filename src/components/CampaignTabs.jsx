@@ -42,9 +42,9 @@ export default function CampaignTabs({ campaigns }) {
     { label: "Aborted", state: 3 },
   ];
 
-  const filterCampaigns = (state) => {
-    if (state === null) return campaigns;
-    return campaigns.filter((c) => c.currentState === state);
+  const filterCampaigns = (status) => {
+    if (status === null) return campaigns;
+    return campaigns.filter((c) => c.campaignStatus === status);
   };
 
   return (
