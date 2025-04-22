@@ -1,350 +1,88 @@
-// import * as React from "react";
-// // UI imports..
-// import {
-//   AppBar,
-//   Toolbar,
-//   Typography,
-//   Badge,
-//   styled,
-//   Avatar,
-//   Button,
-//   Box,
-//   InputBase,
-//   Menu,
-//   MenuItem,
-// } from "@mui/material";
-// import StorefrontIcon from "@mui/icons-material/Storefront";
-// import EmailIcon from "@mui/icons-material/Email";
-// import BadgeUnstyled from "@mui/base/BadgeUnstyled";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import PersonIcon from "@mui/icons-material/Person";
-// import CreateIcon from "@mui/icons-material/Create";
-// import { LoadingButton } from "@mui/lab";
-
-// // service imports..
-// import { useAuth } from "../contexts/AuthContext";
-// import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
-
-// // Wallet connection..
-// import { useWallet } from "use-wallet";
-
-// // Custom styling to components
-// const StyledToolbar = styled(Toolbar)({
-//   display: "flex",
-//   justifyContent: "space-between",
-// });
-
-// const SearchBar = styled("div")(({ theme }) => ({
-//   backgroundColor: "white",
-//   padding: "0 10px",
-//   borderRadius: theme.shape.borderRadius,
-//   width: "40%",
-// }));
-
-// const UserActions = styled("div")(({ theme }) => ({
-//   display: "none",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-//   gap: "20px",
-//   padding: "0 10px",
-//   borderRadius: theme.shape.borderRadius,
-//   [theme.breakpoints.up("sm")]: {
-//     display: "flex",
-//   },
-// }));
-
-// const UserProfile = styled("div")(({ theme }) => ({
-//   display: "flex",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-//   gap: "10px",
-//   borderRadius: theme.shape.borderRadius,
-//   [theme.breakpoints.up("sm")]: {
-//     display: "none",
-//   },
-// }));
-
-// function NavBar() {
-//   // hooks ..
-//   const [profileMenuDisplayStatus, setProfileMenuDisplayStatus] =
-//     useState(false);
-//   // hooks..
-//   const [responseMsg, setResponseMsg] = React.useState(""); // to display error messages.
-//   const [showResponse, setShowResponse] = React.useState(false); // To know whether error occured. ⁉ why not use length of error message
-//   const [responseSeverity, setResponseSeverity] = React.useState("error");
-//   const navigate = useNavigate();
-
-//   const wallet = useWallet();
-
-//   const { currentUserCredentials, signout } = useAuth();
-
-//   const handleSignout = async () => {
-//     // set the response activations to default.
-//     setShowResponse(false);
-//     setResponseMsg("");
-//     setResponseSeverity("error"); // doesn't allowing to have empty, so kept this. Anyway, as showing is false, no worries.
-
-//     // do signout.
-//     try {
-//       await signout();
-//       navigate("/sign-in"); // navigate to sign-in page, after successful logout.
-//     } catch (error) {
-//       setShowResponse(true);
-//       setResponseMsg(error.message);
-//       setResponseSeverity("error");
-//     }
-//   };
-
-//   return (
-//     <AppBar position="sticky" sx={{ bgcolor: "#EFEFEF" }}>
-//       <StyledToolbar>
-//         <Typography
-//           variant="h6"
-//           sx={{
-//             display: {
-//               xs: "none",
-//               sm: "block",
-//               color: "#717171",
-//             },
-//           }}
-//         >
-//           Crowdfunding
-//         </Typography>
-//         <StorefrontIcon
-//           sx={{
-//             display: {
-//               xs: "block",
-//               sm: "none",
-//             },
-//           }}
-//         />
-//         {/* <SearchBar>
-//           <InputBase placeholder="Search.." />
-//         </SearchBar> */}
-//         {/* {isLoggedIn && ( */}
-          
-//         <UserActions>
-//           <Box sx={{ m: 0 }}>
-//             <Button
-//               type="submit"
-//               fullWidth
-//               variant="outlined"
-//               sx={{ mt: 3, mb: 2 }}
-//               startIcon={<CreateIcon />}
-//               onClick={() => navigate("/create-campaign")}
-//             >
-//               Create Campaign
-//             </Button>
-//           </Box>
-//           {wallet.status === "connected" ? (
-//             <>
-//               <Button
-//                 variant="text"
-//                 endIcon={<ExpandMoreIcon />}
-//                 onClick={() => setProfileMenuDisplayStatus(true)}
-//                 color="primary"
-//               >
-//                 {wallet.account.substr(0, 10) + "..."}
-//               </Button>
-//             </>
-//           ) : (
-//             <>
-//               <LoadingButton
-//                 variant="text"
-//                 loading={wallet.status === "connecting"}
-//                 loadingIndicator="Connecting..."
-//                 // sx={{ mt: 3, mb: 2 }}
-//                 endIcon={<AccountBalanceWalletIcon />}
-//                 onClick={() => wallet.connect()}
-//               >
-//                 Connect Wallet
-//               </LoadingButton>
-//             </>
-//           )}
-//         </UserActions>
-//         {/*  */}
-//       </StyledToolbar>
-//       <Menu
-//         id="demo-positioned-menu"
-//         aria-labelledby="demo-positioned-button"
-//         // anchorEl={anchorEl}
-//         open={profileMenuDisplayStatus}
-//         onClose={(e) => setProfileMenuDisplayStatus(false)}
-//         anchorOrigin={{
-//           vertical: "top",
-//           horizontal: "right",
-//         }}
-//         transformOrigin={{
-//           vertical: "top",
-//           horizontal: "right",
-//         }}
-//       >
-//         <MenuItem onClick={() => wallet.reset()}>
-//           <ListItemIcon>
-//             <AccountBalanceWalletIcon fontSize="small" />
-//           </ListItemIcon>
-//           Disconnect Wallet
-//         </MenuItem>
-//         <MenuItem onClick={() => navigate("/profile")}>
-//           <ListItemIcon>
-//             <PersonIcon fontSize="small" />
-//           </ListItemIcon>
-//           Profile
-//         </MenuItem>
-//       </Menu>
-//     </AppBar>
-//   );
-// }
-
-// export default NavBar;
-
-
 import * as React from "react";
-// UI imports..
 import {
   AppBar,
   Toolbar,
   Typography,
-  Badge,
-  styled,
-  Avatar,
   Button,
   Box,
+  IconButton,
   InputBase,
   Menu,
   MenuItem,
+  ListItemIcon,
+  useTheme,
+  styled,
 } from "@mui/material";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import EmailIcon from "@mui/icons-material/Email";
-import BadgeUnstyled from "@mui/base/BadgeUnstyled";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import PersonIcon from "@mui/icons-material/Person";
-import CreateIcon from "@mui/icons-material/Create";
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  AccountBalanceWallet as WalletIcon,
+  Storefront as StorefrontIcon,
+  Create as CreateIcon,
+} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
-// service imports..
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-// Wallet connection..
+// Auth and Wallet
 import { useWallet } from "use-wallet";
 
-// Custom styling to components
-const StyledToolbar = styled(Toolbar)({
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: "#ffffff",
+  marginLeft: theme.spacing(1),
+  width: "auto",
   display: "flex",
-  justifyContent: "space-between",
-});
-
-const SearchBar = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  width: "40%",
-}));
-
-const UserActions = styled("div")(({ theme }) => ({
-  display: "none",
-  justifyContent: "space-between",
   alignItems: "center",
-  gap: "20px",
   padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  [theme.breakpoints.up("sm")]: {
-    display: "flex",
-  },
-}));
-
-const UserProfile = styled("div")(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  gap: "10px",
-  borderRadius: theme.shape.borderRadius,
-  [theme.breakpoints.up("sm")]: {
-    display: "none",
-  },
 }));
 
 function NavBar() {
-  // hooks ..
-  const [profileMenuDisplayStatus, setProfileMenuDisplayStatus] =
-    useState(false);
-  const [responseMsg, setResponseMsg] = React.useState("");
-  const [showResponse, setShowResponse] = React.useState(false);
-  const [responseSeverity, setResponseSeverity] = React.useState("error");
-
   const navigate = useNavigate();
   const wallet = useWallet();
-  const { currentUserCredentials, signout } = useAuth();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleSignout = async () => {
-    setShowResponse(false);
-    setResponseMsg("");
-    setResponseSeverity("error");
-
-    try {
-      await signout();
-      navigate("/sign-in");
-    } catch (error) {
-      setShowResponse(true);
-      setResponseMsg(error.message);
-      setResponseSeverity("error");
-    }
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "#EFEFEF" }}>
-      <StyledToolbar>
-        <Typography
-          variant="h6"
-          sx={{
-            display: {
-              xs: "none",
-              sm: "block",
-              color: "#717171",
-            },
-          }}
-        >
-          Crowdfunding
-        </Typography>
-        <StorefrontIcon
-          sx={{
-            display: {
-              xs: "block",
-              sm: "none",
-            },
-          }}
-        />
+    <>
+      <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <StorefrontIcon />
+            <Typography
+              variant="h6"
+              component={RouterLink}
+              to="/"
+              sx={{ color: "#fff", textDecoration: "none", fontWeight: "bold" }}
+            >
+              CrowdFund
+            </Typography>
+          </Box>
 
-        {/* User Actions Section */}
-        <UserActions>
-          <Box sx={{ m: 0 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Button color="inherit" component={RouterLink} to="/">
+              Home
+            </Button>
+            <Button color="inherit" component={RouterLink} to="/about">
+              About
+            </Button>
             <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              sx={{ mt: 3, mb: 2 }}
+              color="inherit"
               startIcon={<CreateIcon />}
               onClick={() => navigate("/SignIn")}
             >
               Create Campaign
             </Button>
-          </Box>
 
-          {/* ✅ Create Wallet Button */}
-          <Box sx={{ m: 0 }}>
             <Button
-              variant="outlined"
-              sx={{ mt: 3, mb: 2 }}
-              startIcon={<AccountBalanceWalletIcon />}
+              color="inherit"
+              startIcon={<WalletIcon />}
               onClick={() =>
                 window.open(
                   "https://docs.metamask.io/snaps/features/custom-evm-accounts/create-account-snap/",
@@ -354,58 +92,46 @@ function NavBar() {
             >
               Create Wallet
             </Button>
+
+            {wallet.status === "connected" ? (
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => wallet.reset()}
+              >
+                Disconnect Wallet
+              </Button>
+            ) : (
+              <LoadingButton
+                variant="outlined"
+                color="inherit"
+                loading={wallet.status === "connecting"}
+                loadingIndicator="Connecting..."
+                onClick={() => wallet.connect()}
+              >
+                Connect Wallet
+              </LoadingButton>
+            )}
+
+            {/* Profile button placed outside the dropdown */}
+            {wallet.status === "connected" && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/profile")}
+              >
+                Profile
+              </Button>
+            )}
           </Box>
 
-          {wallet.status === "connected" ? (
-            <Button
-              variant="text"
-              endIcon={<ExpandMoreIcon />}
-              onClick={() => setProfileMenuDisplayStatus(true)}
-              color="primary"
-            >
-              {wallet.account.substr(0, 10) + "..."}
-            </Button>
-          ) : (
-            <LoadingButton
-              variant="text"
-              loading={wallet.status === "connecting"}
-              loadingIndicator="Connecting..."
-              endIcon={<AccountBalanceWalletIcon />}
-              onClick={() => wallet.connect()}
-            >
-              Connect Wallet
-            </LoadingButton>
-          )}
-        </UserActions>
-      </StyledToolbar>
-
-      <Menu
-        id="demo-positioned-menu"
-        open={profileMenuDisplayStatus}
-        onClose={() => setProfileMenuDisplayStatus(false)}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <MenuItem onClick={() => wallet.reset()}>
-          <ListItemIcon>
-            <AccountBalanceWalletIcon fontSize="small" />
-          </ListItemIcon>
-          Disconnect Wallet
-        </MenuItem>
-        <MenuItem onClick={() => navigate("/profile")}>
-          <ListItemIcon>
-            <PersonIcon fontSize="small" />
-          </ListItemIcon>
-          Profile
-        </MenuItem>
-      </Menu>
-    </AppBar>
+          {/* <Search>
+            <SearchIcon sx={{ mr: 1 }} />
+            <InputBase placeholder="Search…" />
+          </Search> */}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 }
 

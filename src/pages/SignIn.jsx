@@ -1,9 +1,10 @@
 import * as React from "react";
+import { Link as RouterLink } from "react-router-dom";
+
 // UI imports..
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-// import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -18,14 +19,14 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import FormHelperText from "@mui/material/FormHelperText";
+import { FormControl, Input, InputLabel } from "@mui/material";
 
 // service imports..
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext"; // ✅ Correctly import useAuth
 import { useNavigate } from "react-router-dom";
-import { FormControl, Input, InputLabel } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -50,6 +51,7 @@ const theme = createTheme();
 export default function SignIn() {
   // context's..
   const { signInWithEmailAndPassword, signInWithGooglePopup } = useAuth();
+
   /*............................hooks............................*/
   // for validations..
   const [showPassword, setShowPassword] = React.useState(false);
@@ -74,6 +76,7 @@ export default function SignIn() {
       console.log(formValues);
     }
   }, [formErrors]);
+
   // validations..
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -93,17 +96,17 @@ export default function SignIn() {
     console.info("Values received");
     console.log(values.email);
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (values.email == undefined || values.email == "") {
+    if (!values.email) {
       errors.email = "Email is required!";
     } else if (!regex.test(values.email)) {
       errors.email = "Invalid email format!";
     }
     if (!values.password) {
       errors.password = "Password is required";
-    } else if (values.password.length < 6) {
-      errors.password = "Password must be more than 6 characters";
-    } else if (values.password.length > 10) {
-      errors.password = "Password cannot exceed more than 10 characters";
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be more than 8 characters";
+    } else if (values.password.length > 12) {
+      errors.password = "Password cannot exceed more than 12 characters";
     }
     console.error(errors);
     return errors;
@@ -113,53 +116,45 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-
-    // do signin..
     setFormErrors(validate(formValues)); // perform validation..
     console.info("Errors received");
     console.log(formErrors);
+
     // Proceed next, only if passed.
     if (
-      Object.keys(formErrors).length == 0 &&
-      formValues.email != "" &&
+      Object.keys(formErrors).length === 0 &&
+      formValues.email !== "" &&
       formValues.password !== ""
     ) {
       console.info("Validation passed");
       try {
-        // set the messages to default..
         setShowResponse(false);
         setResponseMsg("");
         setIsLoading(true);
+
         await signInWithEmailAndPassword(
           data.get("email"),
           data.get("password")
         );
-        // console.log(data);
+
         setShowResponse(true);
         setResponseMsg("Sign in success.");
         setResponseSeverity("success");
-        // console.log("Sign up success " + showResponse);
-        navigate("/create-campaign"); // auto-navigate to campaign page (After successful sign-in)
+
+        navigate("/create-campaign");
       } catch (error) {
         setShowResponse(true);
         setResponseSeverity("error");
         setResponseMsg(error.message);
         console.log(error);
       } finally {
-        // after done with sign-in.
         setIsLoading(false);
       }
     }
   };
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+    if (reason === "clickaway") return;
     setShowResponse(false);
   };
 
@@ -173,15 +168,19 @@ export default function SignIn() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            p: 3,
+            borderRadius: 3,
+            boxShadow: 3,
+            backgroundColor: "#f5f5f5",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" fontWeight="bold">
             Sign in
           </Typography>
-          <Typography variant="p" align="center">
+          <Typography variant="body2" align="center" sx={{ mt: 1 }}>
             We know, you'll be back. Please enter your credentials to recognize
             you.
           </Typography>
@@ -189,9 +188,9 @@ export default function SignIn() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            sx={{ mt: 2, width: "100%" }}
           >
-            <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <FormControl fullWidth sx={{ mb: 2 }} variant="standard">
               <InputLabel>Email Address</InputLabel>
               <Input
                 type="email"
@@ -200,12 +199,12 @@ export default function SignIn() {
                 color={formErrors.email ? "error" : "primary"}
                 onChange={handleChange}
               />
-              {formErrors && (
-                <FormHelperText>{formErrors.email}</FormHelperText>
+              {formErrors.email && (
+                <FormHelperText error>{formErrors.email}</FormHelperText>
               )}
             </FormControl>
 
-            <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <FormControl fullWidth sx={{ mb: 2 }} variant="standard">
               <InputLabel>Password</InputLabel>
               <Input
                 id="standard-adornment-password"
@@ -226,8 +225,8 @@ export default function SignIn() {
                   </InputAdornment>
                 }
               />
-              {formErrors && (
-                <FormHelperText>{formErrors.password}</FormHelperText>
+              {formErrors.password && (
+                <FormHelperText error>{formErrors.password}</FormHelperText>
               )}
             </FormControl>
 
@@ -235,35 +234,43 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 0.5 }}
+              sx={{ mt: 2, mb: 1 }}
               disabled={isLoading}
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
+
             <Button
-              type="submit"
               fullWidth
-              variant="contained"
+              variant="outlined"
               onClick={signInWithGooglePopup}
-              sx={{ mt: 0.5, mb: 2 }}
+              sx={{ mb: 2 }}
             >
               Sign In with Google
             </Button>
+
             <Grid container>
               <Grid item xs>
-                <Link href="/forgot-password" variant="body2">
-                  Forgot password?
-                </Link>
+               
+                <Typography variant="body2">
+  <Link component={RouterLink} to="/forgot-password" variant="body2">
+  Forgot password?
+  </Link>
+</Typography>
+
               </Grid>
               <Grid item>
-                <Link href="/sign-up" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <Typography variant="body2">
+  <Link component={RouterLink} to="/SignUp" variant="body2">
+    Don't have an account? Sign Up
+  </Link>
+</Typography>
+
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 4 }} />
         <Snackbar
           open={showResponse}
           autoHideDuration={4000}

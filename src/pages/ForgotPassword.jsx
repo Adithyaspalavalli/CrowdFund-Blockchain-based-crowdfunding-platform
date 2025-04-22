@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Link as RouterLink } from "react-router-dom";// FOR LINKING THE LINKS OF OTHER PAGES
 
 // service imports..
 import firebase from "firebase/compat/app";
@@ -142,14 +143,16 @@ export default function SignIn() {
 
             <Grid container>
               <Grid item xs>
-                <Link href="/sign-in" variant="body2">
+                <Link href="/signin" variant="body2">
                   Back to sign-in
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/sign-up" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <Typography variant="body2">
+  <Link component={RouterLink} to="/SignUp" variant="body2">
+    Don't have an account? Sign Up
+  </Link>
+</Typography>
               </Grid>
             </Grid>
           </Box>
