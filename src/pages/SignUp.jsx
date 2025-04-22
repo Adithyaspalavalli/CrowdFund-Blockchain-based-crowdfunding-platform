@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import * as React from "react";
 // UI imports..
 import Avatar from "@mui/material/Avatar";

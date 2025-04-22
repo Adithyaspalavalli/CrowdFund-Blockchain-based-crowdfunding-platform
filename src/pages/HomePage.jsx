@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI imports
-<<<<<<< HEAD
+
 import { Stack } from "@mui/system";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -20,18 +20,18 @@ import Footer from "../components/Footer";
 import CampaignCard from "../components/CampaignCard";
 
 // blockchain
-=======
+
 import { Box, Container, Typography, Grid, Divider, CircularProgress, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 // [block-chain] smart-contract related imports
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+
 import {
   getDeployedCampaigns,
   getCampaignsSummary,
 } from "../utils/getCampaigns";
 
-<<<<<<< HEAD
+
 function CustomTabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -52,7 +52,7 @@ function a11yProps(index) {
     "aria-controls": `tab-panel-${index}`,
   };
 }
-=======
+
 // local components
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -64,7 +64,7 @@ import Stats from "../components/Stats";
 
 // service imports
 import axios from "axios";
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+
 
 function CampaignTabs({ campaigns }) {
   const [value, setValue] = useState(0);
@@ -119,7 +119,7 @@ function CampaignTabs({ campaigns }) {
 }
 
 function HomePage() {
-<<<<<<< HEAD
+
   const [campaignsList, setCampaignsList] = useState([]);
 
   useEffect(() => {
@@ -135,7 +135,9 @@ function HomePage() {
     fetchData();
     return () => {
       ignore = true;
-=======
+    };
+  }, []);
+
   // for navigation
   const navigate = useNavigate();
   const theme = useTheme();
@@ -165,7 +167,6 @@ function HomePage() {
     fetchData();
     return () => {
       ignore = true; // to avoid rendering multiple times
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
     };
   }, []);
 
@@ -173,7 +174,7 @@ function HomePage() {
     <Box>
       {/* Navigation */}
       <NavBar />
-<<<<<<< HEAD
+
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 4 }} maxWidth="lg">
         <Box sx={{ mb: 4, textAlign: "center" }}>
@@ -259,7 +260,7 @@ function HomePage() {
           </Stack>
         </Box>
       </Container>
-=======
+
 
       {/* Hero Section */}
       <Box sx={{ pt: 8 }}>
@@ -357,10 +358,10 @@ function HomePage() {
       </Box>
 
       {/* Footer */}
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+
       <Footer />
     </Box>
   );
-}
+};
 
 export default HomePage;
