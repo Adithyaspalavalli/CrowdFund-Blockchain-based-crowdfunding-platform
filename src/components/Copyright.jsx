@@ -1,14 +1,25 @@
-import { Link, Typography } from "@mui/material";
-function Copyright() {
+import React from 'react';
+import { Link, Typography, Box } from "@mui/material";
+
+function Copyright({ sx = {} }) {
   return (
-    <Typography variant="body2" color="text.secondary">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        CrowdFund
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <Box sx={sx}>
+      <Typography variant="body2" component="span">
+        {"© "}
+        {new Date().getFullYear()}{" "}
+        <Link 
+          color="inherit" 
+          href="/"
+          sx={{ 
+            textDecoration: 'none',
+            '&:hover': { textDecoration: 'underline' }
+          }}
+        >
+          CrowdFunding
+        </Link>
+        {". All Rights Reserved."}
+      </Typography>
+    </Box>
   );
 }
 
