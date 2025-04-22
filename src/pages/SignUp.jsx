@@ -1,6 +1,5 @@
-
-import * as React from "react";
-// UI imports..
+import React, { useState } from 'react';
+// UI imports
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,37 +15,18 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { Link as RouterLink } from "react-router-dom";
-=======
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Container, 
-  TextField, 
-  Button, 
-  Typography, 
-  Paper, 
-  Grid,
-  Link,
-  InputAdornment, 
-  IconButton,
-  Alert,
-  CircularProgress,
-  Divider
-} from '@mui/material';
-import { 
-  Visibility, 
-  VisibilityOff, 
-  Email, 
-  Lock, 
-  Person,
-  Google
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+
+import { Visibility, VisibilityOff, Email, Lock, Person, Google } from '@mui/icons-material';
+
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -268,21 +248,11 @@ const SignUp = () => {
 
             <Grid container justifyContent="center">
               <Grid item>
-<<<<<<< HEAD
-              <Typography variant="body2">
-  <Link component={RouterLink} to="/Signin" variant="body2">
-    Already  have an account? Sign Ip
-  </Link>
-</Typography>
-=======
-                <Link 
-                  href="#" 
-                  variant="body2" 
-                  onClick={() => navigate('/sign-in')}
-                >
-                  Already have an account? Sign In
-                </Link>
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+                <Typography variant="body2">
+                  <Link component={RouterLink} to="/sign-in" variant="body2">
+                    <br/>Already have an account? Sign In
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </Box>

@@ -1,8 +1,9 @@
+// src/contexts/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword as firebaseSignIn,
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
@@ -27,10 +28,7 @@ export function AuthProvider({ children }) {
   async function signup(email, password, displayName) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // Update profile with display name
-      await updateProfile(userCredential.user, {
-        displayName: displayName
-      });
+      await updateProfile(userCredential.user, { displayName });
       setCurrentUserCredentials(userCredential);
       return userCredential;
     } catch (error) {
@@ -39,8 +37,8 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function login(email, password) {
-    return firebaseSignIn(auth, email, password)
+  function signInWithEmailAndPassword(email, password) {
+    return firebaseSignInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setCurrentUserCredentials(userCredential);
         return userCredential;
@@ -73,7 +71,7 @@ export function AuthProvider({ children }) {
     currentUser,
     currentUserCredentials,
     signup,
-    login,
+    signInWithEmailAndPassword,
     signInWithGoogle,
     signout,
     loading
@@ -86,5 +84,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Add default export
 export default AuthProvider;

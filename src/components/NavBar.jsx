@@ -1,198 +1,58 @@
-<<<<<<< HEAD
 import * as React from "react";
-=======
-import React, { useState } from "react";
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
   Box,
-<<<<<<< HEAD
   IconButton,
-  InputBase,
-=======
   Container,
-  IconButton,
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
   Menu,
   MenuItem,
   ListItemIcon,
   useTheme,
-<<<<<<< HEAD
   styled,
-} from "@mui/material";
-import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
-  AccountBalanceWallet as WalletIcon,
-  Storefront as StorefrontIcon,
-  Create as CreateIcon,
-} from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-
-// Auth and Wallet
-import { useWallet } from "use-wallet";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: "#ffffff",
-  marginLeft: theme.spacing(1),
-  width: "auto",
-  display: "flex",
-  alignItems: "center",
-  padding: "0 10px",
-}));
-
-function NavBar() {
-=======
   useMediaQuery,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  Divider
+  Divider,
 } from "@mui/material";
-import Logo from "./Logo";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import PersonIcon from "@mui/icons-material/Person";
-import CreateIcon from "@mui/icons-material/Create";
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import LoginIcon from '@mui/icons-material/Login';
+import {
+  Menu as MenuIcon,
+  AccountBalanceWallet as WalletIcon,
+  Storefront as StorefrontIcon,
+  Create as CreateIcon,
+  Close as CloseIcon,
+  Person as PersonIcon,
+  Login as LoginIcon,
+} from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import { useWallet } from "use-wallet";
 import { useAuth } from "../contexts/AuthContext";
+import Logo from "./Logo";
 
 function NavBar() {
-  // States
   const [profileMenuDisplayStatus, setProfileMenuDisplayStatus] = useState(false);
-  const [responseMsg, setResponseMsg] = useState("");
-  const [showResponse, setShowResponse] = useState(false);
-  const [responseSeverity, setResponseSeverity] = useState("error");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Hooks
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const wallet = useWallet();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { currentUserCredentials, signout } = useAuth();
 
-<<<<<<< HEAD
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <>
-      <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <StorefrontIcon />
-            <Typography
-              variant="h6"
-              component={RouterLink}
-              to="/"
-              sx={{ color: "#fff", textDecoration: "none", fontWeight: "bold" }}
-            >
-              CrowdFund
-            </Typography>
-          </Box>
-
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Button color="inherit" component={RouterLink} to="/">
-              Home
-            </Button>
-            <Button color="inherit" component={RouterLink} to="/about">
-              About
-            </Button>
-            <Button
-              color="inherit"
-              startIcon={<CreateIcon />}
-              onClick={() => navigate("/SignIn")}
-            >
-              Create Campaign
-            </Button>
-
-            <Button
-              color="inherit"
-              startIcon={<WalletIcon />}
-              onClick={() =>
-                window.open(
-                  "https://docs.metamask.io/snaps/features/custom-evm-accounts/create-account-snap/",
-                  "_blank"
-                )
-              }
-            >
-              Create Wallet
-            </Button>
-
-            {wallet.status === "connected" ? (
-              <Button
-                variant="outlined"
-                color="inherit"
-                onClick={() => wallet.reset()}
-              >
-                Disconnect Wallet
-              </Button>
-            ) : (
-              <LoadingButton
-                variant="outlined"
-                color="inherit"
-                loading={wallet.status === "connecting"}
-                loadingIndicator="Connecting..."
-                onClick={() => wallet.connect()}
-              >
-                Connect Wallet
-              </LoadingButton>
-            )}
-
-            {/* Profile button placed outside the dropdown */}
-            {wallet.status === "connected" && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => navigate("/profile")}
-              >
-                Profile
-              </Button>
-            )}
-          </Box>
-
-          {/* <Search>
-            <SearchIcon sx={{ mr: 1 }} />
-            <InputBase placeholder="Search…" />
-          </Search> */}
-        </Toolbar>
-      </AppBar>
-    </>
-=======
-  // Check if user is logged in
   const isLoggedIn = !!currentUserCredentials;
 
   const handleSignout = async () => {
-    // Set the response activations to default
-    setShowResponse(false);
-    setResponseMsg("");
-    setResponseSeverity("error");
-
-    // Do signout
     try {
       await signout();
-      navigate("/sign-in");
+      navigate("/signin");
     } catch (error) {
-      setShowResponse(true);
-      setResponseMsg(error.message);
-      setResponseSeverity("error");
+      console.error("Logout failed:", error.message);
     }
   };
 
@@ -205,20 +65,13 @@ function NavBar() {
   };
 
   const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Active Campaigns', path: '/active-campaigns' },
+    { label: "Home", path: "/" },
+    { label: "Active Campaigns", path: "/active-campaigns" },
   ];
 
   const drawer = (
     <Box sx={{ width: 280, padding: 2 }}>
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 2
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
         <Logo />
         <IconButton onClick={handleMobileMenuToggle}>
           <CloseIcon />
@@ -228,7 +81,7 @@ function NavBar() {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemButton 
+            <ListItemButton
               onClick={() => {
                 navigate(item.path);
                 handleMobileMenuToggle();
@@ -239,15 +92,12 @@ function NavBar() {
           </ListItem>
         ))}
         <ListItem disablePadding>
-          <ListItemButton 
+          <ListItemButton
             onClick={() => {
-              navigate('/create-campaign');
+              navigate("/create-campaign");
               handleMobileMenuToggle();
             }}
-            sx={{ 
-              color: theme.palette.primary.main,
-              fontWeight: 'bold'
-            }}
+            sx={{ color: theme.palette.primary.main, fontWeight: "bold" }}
           >
             <ListItemIcon>
               <CreateIcon color="primary" />
@@ -263,7 +113,7 @@ function NavBar() {
             variant="contained"
             fullWidth
             startIcon={<LoginIcon />}
-            onClick={() => navigate('/sign-in')}
+            onClick={() => navigate("/sign-in")}
             sx={{ mb: 2 }}
           >
             Login / Sign Up
@@ -273,7 +123,7 @@ function NavBar() {
           <Button
             variant="outlined"
             fullWidth
-            startIcon={<AccountBalanceWalletIcon />}
+            startIcon={<WalletIcon />}
             onClick={() => wallet.reset()}
             sx={{ mb: 2 }}
           >
@@ -283,7 +133,7 @@ function NavBar() {
           <Button
             variant="outlined"
             fullWidth
-            startIcon={<AccountBalanceWalletIcon />}
+            startIcon={<WalletIcon />}
             onClick={() => wallet.connect()}
             sx={{ mb: 2 }}
           >
@@ -295,10 +145,9 @@ function NavBar() {
   );
 
   return (
-    <AppBar position="fixed" color="default" elevation={0} sx={{ bgcolor: '#ffffff' }}>
+    <AppBar position="sticky" color="default" elevation={0} sx={{ bgcolor: "#ffffff" }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ height: 70 }}>
-          {/* Mobile menu icon */}
           {isMobile && (
             <IconButton
               edge="start"
@@ -310,13 +159,26 @@ function NavBar() {
               <MenuIcon />
             </IconButton>
           )}
-          
-          {/* Logo */}
-          <Logo />
 
-          {/* Main navigation items */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <StorefrontIcon sx={{ color: "primary.main" }} />
+            <Typography
+              variant="h6"
+              component="div"
+              onClick={() => navigate("/")}
+              sx={{
+                color: "primary.main",
+                textDecoration: "none",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              CrowdFund
+            </Typography>
+          </Box>
+
           {!isMobile && (
-            <Box sx={{ flexGrow: 1, display: 'flex', ml: 4 }}>
+            <Box sx={{ flexGrow: 1, display: "flex", ml: 4 }}>
               {navItems.map((item) => (
                 <Button
                   key={item.label}
@@ -330,9 +192,8 @@ function NavBar() {
             </Box>
           )}
 
-          {/* Right side actions */}
           {!isMobile && (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button
                 variant="contained"
                 startIcon={<CreateIcon />}
@@ -341,8 +202,7 @@ function NavBar() {
               >
                 Create Campaign
               </Button>
-              
-              {/* Login/Signup Button */}
+
               {!isLoggedIn && (
                 <Button
                   variant="outlined"
@@ -353,38 +213,33 @@ function NavBar() {
                   Login / Sign Up
                 </Button>
               )}
-              
-              {/* Wallet Button */}
+
               {wallet.status === "connected" ? (
                 <Button
                   variant="outlined"
                   onClick={() => setProfileMenuDisplayStatus(true)}
-                  startIcon={<AccountBalanceWalletIcon />}
+                  startIcon={<WalletIcon />}
                 >
-                  {wallet.account.substr(0, 10) + "..."}
+                  {wallet.account?.slice(0, 6)}...{wallet.account?.slice(-4)}
                 </Button>
               ) : (
-                <Button
+                <LoadingButton
                   variant="outlined"
+                  loading={wallet.status === "connecting"}
+                  loadingIndicator="Connecting..."
                   onClick={() => wallet.connect()}
-                  startIcon={<AccountBalanceWalletIcon />}
+                  startIcon={<WalletIcon />}
                 >
                   Connect Wallet
-                </Button>
+                </LoadingButton>
               )}
             </Box>
           )}
 
-          {/* Mobile drawer */}
-          <Drawer
-            anchor="left"
-            open={mobileMenuOpen}
-            onClose={handleMobileMenuToggle}
-          >
+          <Drawer anchor="left" open={mobileMenuOpen} onClose={handleMobileMenuToggle}>
             {drawer}
           </Drawer>
 
-          {/* Profile menu */}
           <Menu
             id="profile-menu"
             anchorOrigin={{
@@ -398,29 +253,35 @@ function NavBar() {
             open={profileMenuDisplayStatus}
             onClose={handleProfileMenuClose}
           >
-            <MenuItem onClick={() => {
-              wallet.reset();
-              handleProfileMenuClose();
-            }}>
+            <MenuItem
+              onClick={() => {
+                wallet.reset();
+                handleProfileMenuClose();
+              }}
+            >
               <ListItemIcon>
-                <AccountBalanceWalletIcon fontSize="small" />
+                <WalletIcon fontSize="small" />
               </ListItemIcon>
               Disconnect Wallet
             </MenuItem>
-            <MenuItem onClick={() => {
-              navigate("/profile");
-              handleProfileMenuClose();
-            }}>
+            <MenuItem
+              onClick={() => {
+                navigate("/profile");
+                handleProfileMenuClose();
+              }}
+            >
               <ListItemIcon>
                 <PersonIcon fontSize="small" />
               </ListItemIcon>
               Profile
             </MenuItem>
             {isLoggedIn && (
-              <MenuItem onClick={() => {
-                handleSignout();
-                handleProfileMenuClose();
-              }}>
+              <MenuItem
+                onClick={() => {
+                  handleSignout();
+                  handleProfileMenuClose();
+                }}
+              >
                 <ListItemIcon>
                   <LoginIcon fontSize="small" />
                 </ListItemIcon>
@@ -431,7 +292,6 @@ function NavBar() {
         </Toolbar>
       </Container>
     </AppBar>
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
   );
 }
 

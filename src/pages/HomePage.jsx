@@ -1,37 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
-// UI imports
-
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Divider,
+  CircularProgress,
+  CssBaseline,
+  Tabs,
+  Tab,
+  Button,
+  useTheme,
+} from "@mui/material";
 import { Stack } from "@mui/system";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CircularProgress from "@mui/material/CircularProgress";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 
 // components
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import CampaignCard from "../components/CampaignCard";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+// import Categories from "../components/Categories";
+import Stats from "../components/Stats";
 
 // blockchain
-
-import { Box, Container, Typography, Grid, Divider, CircularProgress, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
-// [block-chain] smart-contract related imports
-
 import {
   getDeployedCampaigns,
   getCampaignsSummary,
 } from "../utils/getCampaigns";
 
-
+// Custom Tabs Panel Component
 function CustomTabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -52,19 +51,6 @@ function a11yProps(index) {
     "aria-controls": `tab-panel-${index}`,
   };
 }
-
-// local components
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import CampaignCard from "../components/CampaignCard";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Categories from "../components/Categories";
-import Stats from "../components/Stats";
-
-// service imports
-import axios from "axios";
-
 
 function CampaignTabs({ campaigns }) {
   const [value, setValue] = useState(0);
@@ -119,43 +105,23 @@ function CampaignTabs({ campaigns }) {
 }
 
 function HomePage() {
-
   const [campaignsList, setCampaignsList] = useState([]);
-
-  useEffect(() => {
-    let ignore = false;
-    const fetchData = async () => {
-      const deployedCampaignsList = await getDeployedCampaigns();
-      const campaignsSummary = await getCampaignsSummary(deployedCampaignsList);
-      if (!ignore) {
-        setCampaignsList(campaignsSummary);
-        console.log("Fetched campaigns:", campaignsSummary);
-      }
-    };
-    fetchData();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
-  // for navigation
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const theme = useTheme();
 
-  // hooks
-  const [campaignsList, setCampaignsList] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-
   useEffect(() => {
     let ignore = false;
-    
-    // fetch the campaigns
+
     const fetchData = async () => {
       try {
         setLoading(true);
         const deployedCampaignsList = await getDeployedCampaigns();
-        setCampaignsList(await getCampaignsSummary(deployedCampaignsList));
-        console.log("Fetched campaigns");
+        const campaignsSummary = await getCampaignsSummary(deployedCampaignsList);
+        if (!ignore) {
+          setCampaignsList(campaignsSummary);
+          console.log("Fetched campaigns:", campaignsSummary);
+        }
       } catch (error) {
         console.error("Error fetching campaigns:", error);
       } finally {
@@ -163,19 +129,17 @@ function HomePage() {
       }
     };
 
-    // fetch the data
     fetchData();
     return () => {
-      ignore = true; // to avoid rendering multiple times
+      ignore = true;
     };
   }, []);
 
   return (
     <Box>
-      {/* Navigation */}
       <NavBar />
-
       <CssBaseline />
+
       <Container component="main" sx={{ mt: 8, mb: 4 }} maxWidth="lg">
         <Box sx={{ mb: 4, textAlign: "center" }}>
           <Typography variant="h2" component="h1" gutterBottom color="primary.main">
@@ -189,7 +153,6 @@ function HomePage() {
           </Typography>
         </Box>
 
-        {/* Why CrowdFund Section */}
         <Container
           sx={{
             my: 6,
@@ -214,7 +177,7 @@ function HomePage() {
 
             <Grid container spacing={2} justifyContent="center" sx={{ mt: 4 }}>
               <Grid item>
-              <Button component={Link} to="/signup" variant="contained" size="large">
+                <Button component={Link} to="/sign-up" variant="contained" size="large">
                   Start a Campaign
                 </Button>
               </Grid>
@@ -229,27 +192,26 @@ function HomePage() {
               If you're a new user, please create a new MetaMask account:
             </Typography>
             <Button
-  variant="outlined"
-  href="https://metamask.io/"
-  size="large"
-  sx={{ mt: 1 }}
-  component="a"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Create MetaMask Account
-</Button>
+              variant="outlined"
+              href="https://metamask.io/"
+              size="large"
+              sx={{ mt: 1 }}
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Create MetaMask Account
+            </Button>
           </Box>
         </Container>
 
-        {/* Campaign Listing Section */}
         <Box id="campaigns" sx={{ mt: 4, mb: 2 }}>
           <Stack spacing={2} alignItems="center">
             <Typography variant="h5" gutterBottom>
               Browse Campaigns by Status
             </Typography>
             <Container sx={{ py: 2 }} maxWidth="lg">
-              {campaignsList.length === 0 ? (
+              {loading ? (
                 <Box textAlign="center">
                   <CircularProgress color="primary" />
                 </Box>
@@ -261,22 +223,14 @@ function HomePage() {
         </Box>
       </Container>
 
-
-      {/* Hero Section */}
       <Box sx={{ pt: 8 }}>
         <Hero />
       </Box>
 
-      {/* Features Section */}
       <Features />
-
-      {/* Stats Section */}
       <Stats />
+      {/* <Categories /> */}
 
-      {/* Categories Section */}
-      <Categories />
-
-      {/* Active Campaigns Section */}
       <Box
         sx={{
           py: 8,
@@ -284,17 +238,17 @@ function HomePage() {
         }}
       >
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Box sx={{ textAlign: "center", mb: 6 }}>
             <Typography variant="h2" component="h2" fontWeight="bold" gutterBottom>
               Active Campaigns
             </Typography>
-            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: "800px", mx: "auto" }}>
               Discover and support campaigns that need your backing
             </Typography>
           </Box>
 
           {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
               <CircularProgress color="primary" />
             </Box>
           ) : campaignsList.length > 0 ? (
@@ -306,7 +260,7 @@ function HomePage() {
               ))}
             </Grid>
           ) : (
-            <Box sx={{ textAlign: 'center', py: 4 }}>
+            <Box sx={{ textAlign: "center", py: 4 }}>
               <Typography variant="h6" color="text.secondary">
                 No active campaigns at the moment. Be the first to create one!
               </Typography>
@@ -315,13 +269,12 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Call to Action Section */}
       <Box
         sx={{
           py: 8,
           backgroundColor: theme.palette.primary.main,
-          color: 'white',
-          textAlign: 'center',
+          color: "white",
+          textAlign: "center",
         }}
       >
         <Container maxWidth="md">
@@ -331,25 +284,25 @@ function HomePage() {
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.8 }}>
             Create your campaign today and start raising funds for your project or cause.
           </Typography>
-          <Box 
+          <Box
             component="button"
-            onClick={() => navigate('/create-campaign')}
+            onClick={() => navigate("/create-campaign")}
             sx={{
               py: 2,
               px: 4,
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
+              fontSize: "1.2rem",
+              fontWeight: "bold",
               color: theme.palette.primary.main,
-              backgroundColor: 'white',
-              border: 'none',
+              backgroundColor: "white",
+              border: "none",
               borderRadius: 30,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 14px 0 rgba(0, 0, 0, 0.2)',
-              '&:hover': {
-                transform: 'translateY(-3px)',
-                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.3)',
-              }
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              boxShadow: "0 4px 14px 0 rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                transform: "translateY(-3px)",
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.3)",
+              },
             }}
           >
             Create Campaign
@@ -357,11 +310,9 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Footer */}
-
       <Footer />
     </Box>
   );
-};
+}
 
 export default HomePage;

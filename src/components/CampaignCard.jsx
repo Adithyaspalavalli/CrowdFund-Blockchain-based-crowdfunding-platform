@@ -1,28 +1,25 @@
-// library and compoent imports//
 import React from "react";
-import { 
-  Card, 
-  CardActions, 
-  CardContent, 
-  CardMedia, 
-  Typography, 
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
   Button,
-  LinearProgress, 
-  Box, 
-  Stack, 
+  LinearProgress,
+  Box,
+  Stack,
   Chip,
-  Avatar,
   useTheme
 } from "@mui/material";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import ShareIcon from "@mui/icons-material/Share";
 import { useNavigate } from "react-router-dom";
 
-function CampaignCard(props) {
+function CampaignCard({ details }) {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  // Extract the details
+  // Destructure campaign details
   const {
     bannerUrl,
     campaignStatus,
@@ -32,22 +29,22 @@ function CampaignCard(props) {
     ethFunded,
     deadline,
     id,
-  } = props.details;
+  } = details;
 
-  // Find the no. of days left
+  // Calculate days left
   const today = Date.now();
   const diffTime = Math.abs(today - new Date(deadline));
   const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   // Calculate progress percentage
-  const progressPercentage = (ethFunded / ethRaised) * 100;
+  const progressPercentage = Math.min((ethFunded / ethRaised) * 100, 100);
 
-  // Get status color
+  // Get color based on status
   const getStatusColor = () => {
-    switch(campaignStatus) {
-      case 'ACTIVE':
+    switch (campaignStatus) {
+      case "ACTIVE":
         return theme.palette.success.main;
-      case 'SUCCESS':
+      case "SUCCESS":
         return theme.palette.success.dark;
       default:
         return theme.palette.error.main;
@@ -68,22 +65,19 @@ function CampaignCard(props) {
       }}
       elevation={1}
     >
+      {/* Banner + Status */}
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
           height="200"
-          image={bannerUrl || "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"}
+          image={
+            bannerUrl ||
+            "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+          }
           alt={title}
           sx={{ objectFit: "cover" }}
         />
-        <Box
-          sx={{
-            position: "absolute",
-            top: 16,
-            left: 16,
-            zIndex: 2,
-          }}
-        >
+        <Box sx={{ position: "absolute", top: 16, left: 16, zIndex: 2 }}>
           <Chip
             label={campaignStatus}
             size="small"
@@ -97,16 +91,17 @@ function CampaignCard(props) {
         </Box>
       </Box>
 
-      <CardContent 
-        sx={{ 
+      {/* Content */}
+      <CardContent
+        sx={{
           flexGrow: 1,
           cursor: "pointer",
         }}
         onClick={() => navigate(`/campaign/${id}`)}
       >
-        <Typography 
-          variant="h5" 
-          component="h2" 
+        <Typography
+          variant="h5"
+          component="h2"
           gutterBottom
           sx={{
             fontWeight: "bold",
@@ -120,7 +115,7 @@ function CampaignCard(props) {
         >
           {title}
         </Typography>
-        
+
         <Typography
           variant="body2"
           color="text.secondary"
@@ -136,18 +131,19 @@ function CampaignCard(props) {
           {description}
         </Typography>
 
+        {/* Progress bar */}
         <Box sx={{ mt: 2, mb: 1 }}>
-          <LinearProgress 
-            variant="determinate" 
-            value={progressPercentage > 100 ? 100 : progressPercentage} 
-            sx={{ 
-              height: 8, 
+          <LinearProgress
+            variant="determinate"
+            value={progressPercentage}
+            sx={{
+              height: 8,
               borderRadius: 4,
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              '& .MuiLinearProgress-bar': {
+              backgroundColor: "rgba(0, 0, 0, 0.1)",
+              "& .MuiLinearProgress-bar": {
                 borderRadius: 4,
                 backgroundImage: `linear-gradient(to right, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
-              }
+              },
             }}
           />
         </Box>
@@ -166,69 +162,21 @@ function CampaignCard(props) {
           </Typography>
         </Stack>
 
+        {/* Deadline */}
         <Box sx={{ mt: 2, pt: 2, borderTop: `1px solid ${theme.palette.divider}` }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <AccessTimeRoundedIcon fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              {daysLeft > 0 
-                ? `${daysLeft} days left` 
-                : "Campaign ended"}
+              {daysLeft > 0 ? `${daysLeft} days left` : "Campaign ended"}
             </Typography>
-<<<<<<< HEAD
-            <Typography
-              gutterBottom
-              fontSize={15}
-              sx={{
-                display: "-webkit-box",
-                overflow: "hidden",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 3,
-              }}
-            >
-              {description}
-              
-            </Typography>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Stack direction="row" alignItems={"flex-end"}>
-                <Typography component="p" fontSize={15}>
-                  {`Ξ ${ethFunded} `}
-                </Typography>
-                <Typography component="p" fontSize={10} color="grey">
-                  &nbsp; ETH funded
-                </Typography>
-              </Stack>
-              <Stack direction="row" alignItems={"flex-end"}>
-                <Typography component="p" fontSize={15}>
-                  {`Ξ ${ethRaised} `}
-                </Typography>
-                <Typography component="p" fontSize={10} color="grey">
-                  &nbsp; ETH raised
-                </Typography>
-              </Stack>
-            </Stack>
-            <LinearProgressWithLabel value={(ethFunded / ethRaised) * 100} />
-            <Stack direction="row" alignItems={"center"}>
-              <AccessTimeRoundedIcon />
-              <Typography gutterBottom fontSize={14} color="grey">
-                &nbsp; {daysLeft} days left
-              </Typography>
-            </Stack>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </>
-=======
           </Stack>
         </Box>
       </CardContent>
 
+      {/* CTA */}
       <CardActions sx={{ p: 2, pt: 0 }}>
-        <Button 
-          size="medium" 
+        <Button
+          size="medium"
           variant="contained"
           fullWidth
           onClick={() => navigate(`/campaign/${id}`)}
@@ -238,7 +186,6 @@ function CampaignCard(props) {
         </Button>
       </CardActions>
     </Card>
->>>>>>> f7339ca30fd3a145a4ed85e372ca28b4fa724f0e
   );
 }
 
