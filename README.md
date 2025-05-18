@@ -184,15 +184,15 @@ Ready with understanding and basic setup.
 |                          [metamask](https://metamask.io/) | A digital wallet as a browser extension, to manage different test accounts & authorize transactions. |
 | [**Firefox**](https://www.mozilla.org/en-US/firefox/new/) | Browser, for inspection of code with console.                                                        |
 |                       [Netlify](https://www.netlify.com/) | For deploying frontend site.                                                                         |
-|                          [Infura](https://www.infura.io/) | To deploy smart-contract to remotely in `Goerli` test network.                                       |
+|                          [Infura](https://www.infura.io/) | To deploy smart-contract to remotely in `Sepolia` test network.                                       |
 |                              [Yarn](https://yarnpkg.com/) | A package manager, to add & remove packages for the project as per need.                             |
 
 # How to run _(locally & remotely)_? 🏃‍♂️
 
 ## Pre-requisites 🛠️
 
-- Metamask wallet with some `GoerliETH`, fine even if had < 0.5 ETH _(for testing purposes)_.
-  - Lacking GoerliETH ? -- get it free of 0.2 ETH/day at [Alchemy's Goerli faucet](https://goerlifaucet.com/) -- note that, this needs sign-up.
+- Metamask wallet with some `SepoliaETH`, fine even if had < 0.5 ETH _(for testing purposes)_.
+  - Lacking GoerliETH ? -- get it free of 0.2 ETH/day at [Alchemy's Sepolia faucet](https://goerlifaucet.com/) -- note that, this needs sign-up.
 - Clone this repo.
 
 _(ONLY for running remotely)_
