@@ -1,9 +1,12 @@
 const hre = require("hardhat");
 
 async function main() {
+  console.log("Compiling and preparing for deployment...")
   // We get the contract to deploy
   const CrowdHelp = await hre.ethers.getContractFactory("CrowdHelp");
+   console.log("Contract factory obtained. Deploying...");
   const crowdHelp = await CrowdHelp.deploy();
+   console.log("CrowdHelp yet to deploy wait");
 
   await crowdHelp.deployed();
 

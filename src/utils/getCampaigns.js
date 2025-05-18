@@ -102,3 +102,8 @@ function cvtIntStatusToEnum(status) {
   }
   return str;
 } 
+export const getAvailableFundingSchemes = async() =>{
+  const fundingSchemesList = await crowdHelp.methods.getAllSchemeTitles().call();
+  console.debug ("obtained funding schemes list: ", fundingSchemesList);
+  return fundingSchemesList;
+}

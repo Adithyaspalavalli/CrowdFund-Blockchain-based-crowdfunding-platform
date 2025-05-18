@@ -1,9 +1,9 @@
-require("dotenv").config({ path: __dirname + "/.env" }); // When deploying -- be careful about this path..
+require("dotenv").config({ path: __dirname + "/.env.local" }); // When deploying -- be careful about this path..
 require("@nomiclabs/hardhat-ethers");
 require("hardhat-deploy");
 require("@nomicfoundation/hardhat-toolbox");
 
-console.log(process.env.INFURA_API_KEY);
+console.log(process.env.SEPOLIA_RPC_URL);
 console.log(process.env.PRIVATE_KEY);
 
 module.exports = {
@@ -23,6 +23,18 @@ module.exports = {
       blockGasLimit: 18800000,
       chainId: 31337,
     },
+    sepolia_testnet: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 11155111,
+     // blockConfirmations: 6,
+     //  gasPrice: 100000000,
+      gas: "auto",
+      maxFeePerGas: 3000000000, // 3 gwei
+      maxPriorityFeePerGas: 1000000000, // 1 gwei
+      saveDeployments: true,
+       deploy: ["scripts/"],
+    }
     // goerli_testnet: {
     //   // url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`, <<-- tried this way, its failing, so employed below way.
     //   url: "https://goerli.infura.io/v3/eaf842956c36444c8aaf54163a47e0d2",
@@ -31,6 +43,16 @@ module.exports = {
     //   saveDeployments: true,
     //   deploy: ["scripts/"],
     // },
+  },
+   etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    enabled: process.env.REPORT_GAS !== undefined,
+    noColors: true,
+    currency: "USD",
+    // Optional: only used if you have a CoinMarketCap API key
+    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
   },
 };
 
