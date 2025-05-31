@@ -1,4 +1,5 @@
 // Library imports
+
 import "./App.css";
 import { Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,6 +15,8 @@ import ActiveCampaigns from "./pages/campaigns/ActiveCampaigns";
 import Profile from "./pages/Profile";
 import ViewCampaign from "./pages/campaigns/ViewCampaign";
 import AboutPage from "./pages/AboutPage";
+import TeamPage from "./pages/TeamPage";
+import TutorialPage from "./pages/TutorialPage";
 import ForgotPassword from "./pages/ForgotPassword";
 
 // Contexts and Protected Routes
@@ -38,6 +41,8 @@ function App() {
           <Routes>
             <Route index element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/team" element={<TeamPage />} />
+            <Route path="/tutorial" element={<TutorialPage />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
