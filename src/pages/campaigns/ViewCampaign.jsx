@@ -263,8 +263,9 @@ function ViewCampaign() {
                 </Typography>
 
                 <Link
+                target="_blank"
                   variant="body2"
-                  href={`https://sepolia.etherscan.io/address/0xFA9874722C52D38aE4E1f529bFE94Cc92839DE3D${campaignData.id}`}
+                  href={`https://sepolia.etherscan.io/address/0xFA9874722C52D38aE4E1f529bFE94Cc92839DE3D`}
                 >
                   View on Sepolia Etherscan
                 </Link>

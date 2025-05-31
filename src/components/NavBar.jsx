@@ -66,7 +66,9 @@ function NavBar() {
 
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "Active Campaigns", path: "/active-campaigns" },
+    { label: "About", path: "/about" },
+    
+    // { label: "Active Campaigns", path: "/active-campaigns" },
   ];
 
   const drawer = (
