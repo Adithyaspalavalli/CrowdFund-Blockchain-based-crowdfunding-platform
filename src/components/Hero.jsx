@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <Box
       sx={{
-        backgroundImage: 'linear-gradient(135deg, #7649f9 0%, #5a35c7 100%)',
+        backgroundImage: 'linear-gradient(135deg, #7649f9 0%,rgb(85, 56, 172) 100%)',
         color: 'white',
         pt: 12,
         pb: 8,

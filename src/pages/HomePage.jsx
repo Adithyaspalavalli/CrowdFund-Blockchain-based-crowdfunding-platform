@@ -20,6 +20,8 @@ import {
 } from "../../utils/getCampaigns";
 
 // Local components
+import Features from "../components/Features";
+import Hero from "../components/Hero";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import CampaignCard from "../components/CampaignCard";
@@ -96,7 +98,8 @@ function HomePage() {
               </Button>
             </Grid>
           </Grid>
-
+        
+         
           <Typography variant="body2" sx={{ mt: 3 }}>
             If you're a new user, please create a new MetaMask account:
           </Typography>
@@ -112,7 +115,7 @@ function HomePage() {
             Create MetaMask Account
           </Button>
         </Box>
-
+ 
         <Box
           sx={{
             py: 8,
@@ -156,7 +159,22 @@ function HomePage() {
           </Container>
         </Box>
       </Container>
-      
+
+       {/* this the hero component */}
+        <Box sx={{ maxWidth: "100%", margin: "0 auto" , borderRadius: 30,}} >
+            <Container>
+              <Hero />
+            </Container>
+        </Box>
+
+        {/*this features component*/}
+       <Box sx={{ maxWidth: "750px", margin: "0 auto" , borderRadius: 30,}} >
+            <Container>
+                <Features />
+            </Container>
+          </Box>
+         
+         
       <Box sx={{ mt: 4, mb: 2 }}>
           <Stack>
             <Container sx={{ py: 2 }} maxWidth="md">

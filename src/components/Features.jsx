@@ -58,7 +58,8 @@ const Features = () => {
                   transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
                   '&:hover': {
                     transform: 'translateY(-5px)',
-                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                    backgroundColor:'orange'
                   }
                 }}
               >

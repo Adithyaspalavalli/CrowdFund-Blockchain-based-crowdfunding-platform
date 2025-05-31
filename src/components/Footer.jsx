@@ -12,26 +12,9 @@ const footerLinks = [
     title: 'About',
     links: [
       { name: 'Our Story', url: '/about' },
-      { name: 'Team', url: '/team' },
-      { name: 'Careers', url: '/careers' }
+     
     ]
   },
-  {
-    title: 'Resources',
-    links: [
-      { name: 'Blog', url: '/blog' },
-      { name: 'Documentation', url: '/docs' },
-      { name: 'FAQ', url: '/faq' }
-    ]
-  },
-  {
-    title: 'Support',
-    links: [
-      { name: 'Help Center', url: '/help' },
-      { name: 'Contact Us', url: '/contact' },
-      { name: 'Community', url: '/community' }
-    ]
-  }
 ];
 
 const Footer = () => {
@@ -143,7 +126,7 @@ const Footer = () => {
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { sm: 'center' }, justifyContent: 'space-between' }}>
           <Copyright sx={{ color: 'white', opacity: 0.7 }} />
           <Typography variant="body2" sx={{ mt: { xs: 2, sm: 0 }, opacity: 0.7 }}>
-            CrowdFund platform - Core functionalities. Built with ❤️
+           CrowdFund platform - [ONLY] Core functionalities done. 🚧
           </Typography>
         </Box>
       </Container>

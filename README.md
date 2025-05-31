@@ -249,9 +249,9 @@ _(Run these commands by being in project root directory)_
 
 ## Running remotely 🏃‍♂️
 
-- Follow the above steps. Now just change the network as `goerli_testnet` while deploying.
+- Follow the above steps. Now just change the network as `sepolia_testnet` while deploying.
   ```
-   npx hardhat run scripts/deploy.js --network goerli_testnet
+   npx hardhat run scripts/deploy.js --network sepolia_testnet
   ```
 - To run on different test-net..
   - Use different URL in `hardhat.config.js`.
@@ -296,4 +296,6 @@ _(Specially)_
 
 
 
-https://sepolia.etherscan.io/address <address>
+https://sepolia.etherscan.io/address/0x68da3163Ab5A1b268948Bf8F798Ca34afa096
+
+ <address>

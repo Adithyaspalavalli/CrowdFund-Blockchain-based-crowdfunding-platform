@@ -172,7 +172,7 @@ const SignIn = () => {
           </Alert>
         </Snackbar>
       </Container>
-      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ flexGrow: 4 }} />
       <Footer />
     </Box>
   );
