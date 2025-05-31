@@ -50,7 +50,7 @@ function NavBar() {
   const handleSignout = async () => {
     try {
       await signout();
-      navigate("/signin");
+      navigate("/signinz");
     } catch (error) {
       console.error("Logout failed:", error.message);
     }

@@ -264,9 +264,9 @@ function ViewCampaign() {
 
                 <Link
                   variant="body2"
-                  href={`https://sepolia.etherscan.io/address/0x4cb5baDa59e53b1e04b02dEFA4cfed82C9886e43${campaignData.id}`}
+                  href={`https://sepolia.etherscan.io/address/0xFA9874722C52D38aE4E1f529bFE94Cc92839DE3D${campaignData.id}`}
                 >
-                  View on Goerli Etherscan
+                  View on Sepolia Etherscan
                 </Link>
               </Stack>
             </Container>
