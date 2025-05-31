@@ -38,7 +38,7 @@ const Features = () => {
           <Typography variant="h2" component="h2" color="primary" fontWeight="bold" gutterBottom>
             Key Features
           </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px', mx: 'auto' }}>
+          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '1000px', mx: 'auto' }}>
             Our platform offers a seamless experience for both campaign creators and backers
           </Typography>
         </Box>
