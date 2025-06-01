@@ -86,6 +86,7 @@ Ready with understanding and basic setup.
 ## Understanding the flow of application (with screenshots) 📸
 
 **Home page**
+
 ![](docs/HomePage.png)
 
 ### **1. Wallet connection**
