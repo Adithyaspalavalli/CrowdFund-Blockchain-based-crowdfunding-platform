@@ -192,7 +192,7 @@ Ready with understanding and basic setup.
 ## Pre-requisites 🛠️
 
 - Metamask wallet with some `SepoliaETH`, fine even if had < 0.5 ETH _(for testing purposes)_.
-  - Lacking GoerliETH ? -- get it free of 0.2 ETH/day at [Alchemy's Sepolia faucet](https://goerlifaucet.com/) -- note that, this needs sign-up.
+  - Lacking sepoliaETH ? -- get it free of 0.5 ETH/day at [Alchemy's Sepolia faucet](https://sepoliafaucet.com/) -- note that, this needs sign-up.
 - Clone this repo.
 
 _(ONLY for running remotely)_
@@ -284,9 +284,7 @@ _(Majorly...)_
 
 # Docs & reports 📘
 
-- Detailed Documentation PDF version - [_Earlier version_](https://drive.google.com/file/d/1k-kUZ3tw3iFYRNsqDxP8UjEcs0CnIu1K/view?usp=sharing), [_Latest with new changes_](https://drive.google.com/file/d/1AAaWbmMpCXoIaLle3ne3xcyUUrJ9TbNi/view?usp=sharing)
-- PPTs - [Review_1 - Introduction, SRS & Literature Survey](https://drive.google.com/file/d/1pClPlQjDtnnx3ibsLzgpA3nKgT4GuNIh/view?usp=sharing), [Review_2- System Design, Use cases & Sequence diagrams](https://drive.google.com/file/d/1L1RBqO5CgtdZDzJoeR5TE6tjPZieNk8L/view?usp=sharing), Review\*3 - Implementation screenshots, conclusion & future upgrades _(Not prepared, but all these are available in this README.md)_ - [Final Viva - concised version](https://drive.google.com/file/d/1hGgSI76YmqfYDj6Ptt-tszw0HTcuZstd/view?usp=sharing) _(Almost similar to Review-3)_
-- Design files - [done in app.diagrams.net _(formerly draw.io)_](https://drive.google.com/file/d/1Jc0BBMfM1klZfjZ2x4Wah0PLK0q1V8qP/view?usp=sharing)
+
 
 # Acknowledgements
 
